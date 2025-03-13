@@ -1,0 +1,8 @@
+jupyter-book
+jupyter
+numpy<2.0
+pandas
+matplotlib
+seaborn
+pyWavelets
+scipy    

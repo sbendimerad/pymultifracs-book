@@ -1,0 +1,9 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+  - file: 01_multifractal_analysis.ipynb 
+  - file: 02_outlier_detection.ipynb 
+  - file: 03_bivariate_analysis.ipynb

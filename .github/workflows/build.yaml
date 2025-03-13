@@ -1,0 +1,84 @@
+# Build and publish the book online
+
+name: build
+on:
+  push:
+    branches: ["main"]
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+
+jobs:
+  build-book:
+    name: Build Jupyter-book
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install ipykernel
+          python -m pip install -r requirements.txt
+
+      - name: cache executed notebooks
+        uses: actions/cache@v3
+        with:
+          path: src/_build/.jupyter_cache
+          key: jupyter-book-cache-${{ hashFiles('requirements.txt') }}
+
+      - name: Build the book
+        run: |
+          source venv/bin/activate
+          python -m ipykernel install --user --name=venv
+          jupyter-book build src
+
+      - name: Upload artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: src/_build/html
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
+
+  update_colab:
+     name: Update notebooks for Colab Compatibility
+     runs-on: ubuntu-latest
+     permissions:                # Job-level permissions configuration starts here
+       contents: write           # 'write' access to repository contents
+       pull-requests: write      # 'write' access to pull requests
+     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install nbformat
+      - name: Run update script
+        run: |
+          python extra/update_notebook_header.py --inplace
+      - name: Save results to a new branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "colab"
+          git commit -am "Adapt notebook to colab"
+          git push --force origin colab
