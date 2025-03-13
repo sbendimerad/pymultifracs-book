@@ -26,11 +26,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip --quiet
           python -m venv venv
           source venv/bin/activate
-          python -m pip install ipykernel
-          python -m pip install -r requirements.txt
+          python -m pip install ipykernel --quiet
+          python -m pip install -r requirements.txt --quiet
 
       - name: cache executed notebooks
         uses: actions/cache@v3
