@@ -31,7 +31,6 @@ jobs:
           source venv/bin/activate
           python -m pip install ipykernel --quiet
           python -m pip install -r requirements.txt --quiet
-          python -m pip install git+https://github.com/neurospin/pymultifracs -q
 
       - name: cache executed notebooks
         uses: actions/cache@v3
