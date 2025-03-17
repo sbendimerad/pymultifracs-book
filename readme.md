@@ -3,7 +3,7 @@
 This repository contains tutorials on **wavelet-based multifractal analysis** using the [`pymultifracs`](https://github.com/neurospin/pymultifracs) library. These tutorials provide an introduction to multifractal analysis, including **estimation of multifractal spectra, structure functions, cumulant analysis, and outlier detection**.
 
 ## **About pymultifracs**  
-[`pymultifracs`](https://github.com/neurospin/pymultifracs) is a Python package developed by **Merlin Dumeur** for performing **wavelet-based multifractal analysis** on 1D signals.  
+[`pymultifracs`](https://github.com/neurospin/pymultifracs) is a Python package developed by **Merlin Dumeur** to perform **wavelet-based multifractal analysis** on 1D signals.  
 
 ### **🔹 Features of pymultifracs:**
 - Computation of **wavelet coefficients, wavelet-leaders, and p-leaders**  
